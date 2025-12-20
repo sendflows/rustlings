@@ -46,6 +46,14 @@ impl State {
     fn process(&mut self, message: Message) {
         // TODO: Create a match expression to process the different message
         // variants using the methods defined above.
+
+        match message {
+            Message::Resize {width, height} => self.resize(width, height),
+            Message::Move(point) => self.move_position(point),
+            Message::Echo(stringg) => self.echo(stringg),
+            Message::ChangeColor(r,g,b) => self.change_color(r,g,b),
+            Message::Quit => self.quit()
+        }
     }
 }
 
@@ -59,7 +67,7 @@ mod tests {
 
     #[test]
     fn test_match_message_call() {
-        let mut state = State {
+        let mut state = State { // initiates the state
             width: 0,
             height: 0,
             position: Point { x: 0, y: 0 },
@@ -68,7 +76,7 @@ mod tests {
             quit: false,
         };
 
-        state.process(Message::Resize {
+        state.process(Message::Resize { // calls the enum and passes in message to update variables
             width: 10,
             height: 30,
         });
